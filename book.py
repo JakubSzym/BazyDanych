@@ -4,7 +4,11 @@
 # backend 😍
 #
 
-from user import User
+from enum import IntFlag
+
+class BookStatus(IntFlag):
+  AVAILABLE = 0
+  RENTED    = 1
 
 class Book:
 
@@ -15,6 +19,10 @@ class Book:
     self.genre       = genre
     self.id          = id
     self.uid         = uid
+    if self.uid == "0":
+      self.status = BookStatus.AVAILABLE
+    else:
+      self.status = BookStatus.RENTED
 
   def __eq__(self, other):
     if self.id == other.id:
