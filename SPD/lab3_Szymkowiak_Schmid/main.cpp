@@ -13,13 +13,20 @@ struct NEHData
   int tasks;
 };
 
-void readData(vector<NEHData> &list)
+struct NEHResult
+{
+  vector<int> ids;
+  int time;
+};
+
+void readData(vector<NEHData> &list, vector<NEHResult> &results)
 {
   string header;
   int units;
+  int id;
 
   fstream file;
-  file.open("Data.txt", ios::in);
+  file.open("data.txt", ios::in);
 
   //
   // Wczytanie danych
@@ -28,6 +35,7 @@ void readData(vector<NEHData> &list)
   for (int x = 0; x < 120; x++)
   {
     NEHData tmpData;
+    NEHResult tmpResult;
     file >> header >> tmpData.tasks >> tmpData.machines;
     for (int i = 0; i < tmpData.tasks * tmpData.machines; i++)
     {
@@ -39,6 +47,15 @@ void readData(vector<NEHData> &list)
       tmpData.ids.push_back(i);
     }
     list.push_back(tmpData);
+
+    file >> header;
+    file >> tmpResult.time;
+    for (int i = 0; i < tmpData.tasks; i++)
+    {
+      file >> id;
+      tmpResult.ids.push_back(id);
+    }
+    results.push_back(tmpResult);
   }
 
   file.close();
@@ -52,11 +69,11 @@ int length(int number, NEHData &userdata)
   // Wypełnienie zerami wektora pomocniczego
   //
 
-  for (int i = 0; i < userdata.machines; i++)
+  for (int i = 0; i <= userdata.machines; i++)
   {
     help.push_back(0);
   }
-
+  
   //
   // Obliczenie długości wykonywania zadań
   //
@@ -102,6 +119,13 @@ void sortByWeight(NEHData &userdata)
         swap(weights[i], weights[i+1]);
         swap(userdata.ids[i], userdata.ids[i+1]);
       }
+      else if (weights[i] == weights[i+1])
+      {
+        if (userdata.ids[i] < userdata.ids[i+1])
+        {
+          swap(userdata.ids[i], userdata.ids[i+1]);
+        }
+      }
     }
   }
 }
@@ -118,7 +142,7 @@ int runNEH(NEHData &userdata)
     for (int pos = i; pos >= 0; pos--)
     {
       int tmpLength = length(i+1, userdata);
-      if (optimalLength >= tmpLength)
+      if (optimalLength > tmpLength)
       {
         optimalLength = tmpLength;
         optimalPosition = pos;
@@ -141,15 +165,19 @@ int runNEH(NEHData &userdata)
 int main()
 {
   vector<NEHData> database;
-    
-  readData(database);
+  vector<NEHResult> results;
+  int errors = 0;
+  readData(database, results);
 
-  /*for (auto &item: database)
+  for (unsigned int i = 0; i < database.size(); i++)
   {
-    int result = runNEH(item);
-    cout << result << endl;
-  }*/
-
-  int res = runNEH(database[1]);
-  cout << res << endl;
+    int result = runNEH(database[i]);
+    cout << "Wynik: " << result;
+    cout << " Wzor: " << results[i].time << endl;
+    if (result != results[i].time)
+    {
+      errors++;
+    }
+  }
+  cout << "Liczba niepowodzen: " << errors << endl;
 }
