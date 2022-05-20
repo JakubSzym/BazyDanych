@@ -1,32 +1,19 @@
-#
-# Autor: Jakub Szymkowiak, 2022
-# class Book
-# backend 😍
-#
-
-from enum import IntFlag
-
-class BookStatus(IntFlag):
-  AVAILABLE = 0
-  RENTED    = 1
+###########################################
+# DATA BASE APP                           #
+# NAME: E-LIBRARY 2022                    #
+# AUTHORS: JAKUB SZYMKOWIAK, JAKUB SCHMID #
+######################################### #
 
 class Book:
 
-  def __init__(self, id, title, year, author, genre, uid):
-    self.title       = title
-    self.year        = year
-    self.author      = author
-    self.genre       = genre
-    self.id          = id
-    self.uid         = uid
-    if self.uid == "0":
-      self.status = BookStatus.AVAILABLE
-    else:
-      self.status = BookStatus.RENTED
-
-  def __eq__(self, other):
-    if self.id == other.id:
-      return True
-    return False
-
+  def __init__(self, title, genre, year, mark, publisher, author, copies):
+    self.title                 = title
+    self.mark                  = mark
+    self.year                  = year
+    self.author                = author
+    self.genre                 = genre
+    self.publisher             = publisher
+    self.copies                = copies
   
+  def addCopy(self):
+    self.copies += 1
