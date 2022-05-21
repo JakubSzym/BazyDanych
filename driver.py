@@ -64,10 +64,22 @@ class Driver:
     foundBooks = self.lib.selectBooks(self.entryForBooks.get())
 
     self.list = Listbox(self.root, yscrollcommand=self.scrollbar.set, width=200)
-
+  
     for book in foundBooks:
-      self.list.insert(END, book)
-
+      book.title.split()
+      self.list.insert(END, "Tytuł: " + book.title)
+      self.list.insert(END, "Autor: " + book.author)
+      self.list.insert(END, "Gatunek: " + book.genre)
+      self.list.insert(END, "Rok wydania: " + book.year)
+      self.list.insert(END, "Wydawca: " + book.publisher)
+      self.list.insert(END, "Ocena: " + str(book.mark))
+      numberOfCopies = len(book.copies)
+      availableCopies = 0
+      for copy in book.copies:
+        if copy.isRented == 0:
+          availableCopies += 1
+      self.list.insert(END, "Kopie: " + str(numberOfCopies) +
+                            ", w tym dostępne: " + str(availableCopies))
       self.list.insert(END, "")
 
     self.list.pack(side=LEFT, fill=BOTH)

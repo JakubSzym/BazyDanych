@@ -14,6 +14,3 @@ class Book:
     self.genre                 = genre
     self.publisher             = publisher
     self.copies                = copies
-  
-  def addCopy(self):
-    self.copies += 1

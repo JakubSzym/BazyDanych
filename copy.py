@@ -5,7 +5,8 @@
 ######################################### #
 
 class Copy:
-  def __init__(self, dateOfReturn, isRented, idBook) -> None:
+  def __init__(self, dateOfReturn, dateRent, isRented, idCopy) -> None:
       self.dateOfReturn = dateOfReturn
+      self.dateRent = dateRent
       self.isRented = isRented
-      self.book_IdBook = idBook
+      self.idCopy   = idCopy
