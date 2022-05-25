@@ -28,6 +28,6 @@ def executeQuery(connection, query):
   try:
     cursor.execute(query)
     connection.commit()
-    return "Query successful"
+    return True
   except Error as err:
     print(f"Error: {err}")

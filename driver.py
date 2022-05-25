@@ -86,22 +86,21 @@ class Driver:
     self.scrollbar.config(command=self.list.yview)
 
 
-  '''def addBookButtonHandler(self):
+  def addBookButtonHandler(self):
     self.canvas.destroy()
 
     self.canvas = Canvas(self.root, height = 180, width = 500)
     self.canvas.pack()
 
-    self.data.clear()
+    self.lib.insertBook(self.author.get(), 
+                        self.origin.get(), 
+                        self.title.get(), 
+                        self.year.get(),
+                        self.genre.get(), 
+                        self.publisherName.get(), 
+                        self.publisherCity.get())
 
-    self.appendData(self.author.get())
-    self.appendData(self.title.get())
-    self.appendData(self.year.get())
-    self.appendData(self.genre.get())
-
-    self.lib.insertBook(self.data)
-
-    Label(self.canvas, text="Książka została dodana do bazy").pack()'''
+    Label(self.canvas, text="Książka została dodana do bazy").pack()
   
   ''' def addUserButtonHandler(self):
     self.canvas.destroy()
@@ -150,7 +149,7 @@ class Driver:
     searchUserButton.pack()
 
   
-  '''def addBook(self):
+  def addBook(self):
     for widget in self.root.winfo_children():
       widget.destroy()
     
@@ -160,6 +159,9 @@ class Driver:
     self.author = Entry(self.root)
     self.author.pack()
 
+    Label(self.root, text="Kraj pochodzenia autora").pack()
+    self.origin = Entry(self.root)
+    self.origin.pack()
     Label(self.root, text="Tytuł").pack()
 
     self.title = Entry(self.root)
@@ -175,6 +177,16 @@ class Driver:
     self.genre = Entry(self.root)
     self.genre.pack()
 
+    Label(self.root, text="Wydawca").pack()
+
+    self.publisherName = Entry(self.root)
+    self.publisherName.pack()
+
+    Label(self.root, text="Miasto").pack()
+
+    self.publisherCity = Entry(self.root)
+    self.publisherCity.pack()
+
     addBookButton = Button(self.root,
                             text = "Dodaj",
                             width=20, height=1,
@@ -182,7 +194,7 @@ class Driver:
                             command=self.addBookButtonHandler)
     addBookButton.pack()
 
-  def addUser(self):
+  '''def addUser(self):
     for widget in self.root.winfo_children():
       widget.destroy()
     
@@ -227,6 +239,6 @@ class Driver:
     for widget in self.root.winfo_children():
       widget.destroy()
     
-    Label(self.root, text="Autor: Jakub Szymkowiak").pack()
+    Label(self.root, text="Jakub Szymkowiak, Jakub Schmid").pack()
     Label(self.root, text="E-Biblioteka 2022").pack()
   

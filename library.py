@@ -15,7 +15,7 @@ class Library:
     self.connection = connect(host="127.0.0.1", 
                               username="root",
                               password="iamgroot",
-                              database="baza_test4")
+                              database="bazadanych")
   
   def selectBooks(self, userdata):
     allResults = []
@@ -122,8 +122,31 @@ class Library:
     
     return allResults
   
-  def insertBook(self, userdata):
-    return 0
+  def insertBook(self, authorName, authorOrigin, title, year, genre, publisherName, publisherCity):
+    query = f"""SELECT surname FROM Author WHERE surname='{authorName}';"""
+    foundAuthor = readData(self.connection, query)
+    if len(foundAuthor) == 0:
+      query = f"""INSERT INTO Author (surname, origin) VALUES ('{authorName}', '{authorOrigin}');"""
+      ret = executeQuery(self.connection, query)
+      print(ret)
+    
+    query = f"""SELECT publisher FROM PublisherHouse WHERE publisher='{publisherName}';"""
+    foundPublisher = readData(self.connection, query)
+    if len(foundPublisher) == 0:
+      query = f"""INSERT INTO PublisherHouse (publisher, city) VALUES ('{publisherName}', '{publisherCity}');"""
+      ret = executeQuery(self.connection, query)
+      print(ret)
+    
+    query = f"""SELECT title FROM Book WHERE title='{title}' AND yearPublish={year} AND genre='{genre}';"""
+    foundBook = readData(self.connection, query)
+    if len(foundBook) == 0:
+      query = f"""SELECT idPublisher FROM PublisherHouse WHERE publisher='{publisherName}' AND city='{publisherCity}';"""
+      idPublisher = readData(self.connection, query)
+      query = f"""SELECT idAuthor FROM Author WHERE surname='{authorName}' AND origin='{authorOrigin}';"""
+      idAuthor = readData(self.connection, query)
+      query = f"""INSERT INTO Book (title, genre, yearPublish, mark, PublisherHouse_idPublisher, Author_idAuthor) 
+                  VALUES ('{title}', '{genre}', '{year}', 0, '{idPublisher[0][0]}', '{idAuthor[0][0]}');"""
+      executeQuery(self.connection, query)
   
   def insertUser(self, userdata):
     return 0

@@ -35,6 +35,13 @@ bookSearcher = Button(root,
                       command = driver.searchBook)
 bookSearcher.pack()
 
+addBook = Button(root, 
+                 text = "Dodawanie książek", 
+                 width = 20, height = 1, 
+                 fg = "white", bg = "#263D42", 
+                 command = driver.addBook)
+addBook.pack()
+
 userSearcher = Button(root,
                       text="Przeglądanie użytkowników",
                       width = 20, height = 1, 
