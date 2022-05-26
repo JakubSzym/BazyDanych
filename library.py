@@ -8,6 +8,7 @@ from SQLConnector import *
 from book import Book
 from user import User
 from copy import Copy
+from datetime import datetime, timedelta
 
 class Library:
 
@@ -122,20 +123,18 @@ class Library:
     
     return allResults
   
-  def insertBook(self, authorName, authorOrigin, title, year, genre, publisherName, publisherCity):
+  def insertBook(self, authorName, authorOrigin, title, year, genre, publisherName, publisherCity, numberOfCopies):
     query = f"""SELECT surname FROM Author WHERE surname='{authorName}';"""
     foundAuthor = readData(self.connection, query)
     if len(foundAuthor) == 0:
       query = f"""INSERT INTO Author (surname, origin) VALUES ('{authorName}', '{authorOrigin}');"""
       ret = executeQuery(self.connection, query)
-      print(ret)
     
     query = f"""SELECT publisher FROM PublisherHouse WHERE publisher='{publisherName}';"""
     foundPublisher = readData(self.connection, query)
     if len(foundPublisher) == 0:
       query = f"""INSERT INTO PublisherHouse (publisher, city) VALUES ('{publisherName}', '{publisherCity}');"""
       ret = executeQuery(self.connection, query)
-      print(ret)
     
     query = f"""SELECT title FROM Book WHERE title='{title}' AND yearPublish={year} AND genre='{genre}';"""
     foundBook = readData(self.connection, query)
@@ -147,6 +146,16 @@ class Library:
       query = f"""INSERT INTO Book (title, genre, yearPublish, mark, PublisherHouse_idPublisher, Author_idAuthor) 
                   VALUES ('{title}', '{genre}', '{year}', 0, '{idPublisher[0][0]}', '{idAuthor[0][0]}');"""
       executeQuery(self.connection, query)
+      query = f"""SELECT idBook FROM Book WHERE title='{title}' AND yearPublish={year} AND genre='{genre}';"""
+      idBook = readData(self.connection, query)
+      idBook = idBook[0][0]
+      i = 0
+      today =  datetime.now()
+      deadline = today + timedelta(days=30)
+      for i in range(int(numberOfCopies)):
+        query = f"""INSERT INTO Copy (dateRent, dateReturn, isRented, Reader_idReader, Book_idBook) 
+                    VALUES ('{today.strftime("%Y-%m-%d")}', '{deadline.strftime("%Y-%m-%d")}', 0, 1, {idBook});"""
+        executeQuery(self.connection, query)
   
   def insertUser(self, userdata):
     return 0

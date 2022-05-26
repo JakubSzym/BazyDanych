@@ -98,7 +98,8 @@ class Driver:
                         self.year.get(),
                         self.genre.get(), 
                         self.publisherName.get(), 
-                        self.publisherCity.get())
+                        self.publisherCity.get(),
+                        self.numberOfCopies.get())
 
     Label(self.canvas, text="Książka została dodana do bazy").pack()
   
@@ -186,6 +187,11 @@ class Driver:
 
     self.publisherCity = Entry(self.root)
     self.publisherCity.pack()
+
+    Label(self.root, text="Liczba kopii").pack()
+
+    self.numberOfCopies = Entry(self.root)
+    self.numberOfCopies.pack()
 
     addBookButton = Button(self.root,
                             text = "Dodaj",

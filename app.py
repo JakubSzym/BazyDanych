@@ -9,7 +9,6 @@
 
 from tkinter import *
 
-from library import Library
 from driver import Driver
 
 root = Tk()

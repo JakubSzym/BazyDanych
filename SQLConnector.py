@@ -20,7 +20,6 @@ def readData(connection, query):
   results = []
   cursor.execute(query)
   results = cursor.fetchall()
-  print(results)
   return results
 
 def executeQuery(connection, query):
