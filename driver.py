@@ -55,10 +55,8 @@ class Driver:
       self.list.insert(END, "Numer telefonu: " + user.phoneNumber)
       self.list.insert(END, "Wypożyczone książki:")
       for copy in user.copies:
-        self.list.insert(END, copy.author + ", " + 
-                              copy.title + ", " +
-                              str(copy.dateRent) + " - " +
-                              str(copy.dateOfReturn))
+        self.list.insert(END, copy.author + ", " + copy.title)
+        self.list.insert(END, str(copy.dateRent) + " - " + str(copy.dateOfReturn))
 
     self.list.pack(side=LEFT, fill=BOTH)
     self.scrollbar.config(command=self.list.yview)
@@ -169,16 +167,19 @@ class Driver:
   def searchUser(self):
     for widget in self.root.winfo_children():
       widget.destroy()
-    
-    self.entryForUsers = Entry(self.root)
-    self.entryForUsers.pack()
+    if self.librarianLoggedIn:
+      self.entryForUsers = Entry(self.root)
+      self.entryForUsers.pack()
 
-    searchUserButton = Button(self.root,
+      searchUserButton = Button(self.root,
                           text = "Szukaj",
                           width=20, height=1,
                           fg="white", bg="#263D42",
                           command = self.searchUserButtonHandler)
-    searchUserButton.pack()
+      searchUserButton.pack()
+    else:
+      Label(self.root, text="Wymagane uprawnienia bibliotekarza").pack()
+      Label(self.root, text="Zaloguj się, aby przeglądać użytkowników").pack()
   
   def changeUser(self):
     for widget in self.root.winfo_children():
