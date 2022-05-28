@@ -6,7 +6,6 @@
 # AUTHORS: JAKUB SZYMKOWIAK, JAKUB SCHMID #
 ######################################### #
 
-
 from tkinter import *
 
 from driver import Driver
@@ -28,7 +27,7 @@ infoPanel = Button(root,
 infoPanel.pack()
 
 bookSearcher = Button(root, 
-                      text = "Szukaj książek", 
+                      text = "Wyszukiwanie książek", 
                       width = 20, height = 1, 
                       fg = "white", bg = "#263D42", 
                       command = driver.searchBook)
@@ -48,6 +47,34 @@ userSearcher = Button(root,
                       command = driver.searchUser)
 userSearcher.pack()
 
+userAdd = Button(root,
+                      text="Dodawanie użytkowników",
+                      width = 20, height = 1, 
+                      fg = "white", bg = "#263D42", 
+                      command = driver.addUser)
+userAdd.pack()
+
+changeUser = Button(root,
+                      text="Wypożyczenia",
+                      width = 20, height = 1, 
+                      fg = "white", bg = "#263D42", 
+                      command = driver.changeUser)
+changeUser.pack()
+
+login = Button(root,
+                      text="Zaloguj się",
+                      width = 20, height = 1, 
+                      fg = "white", bg = "#263D42", 
+                      command = driver.login)
+login.pack()
+
+logout = Button(root,
+                      text="Wyloguj się",
+                      width = 20, height = 1, 
+                      fg = "white", bg = "#263D42", 
+                      command = driver.logout)
+logout.pack()
 driver.root.pack()
+
 
 root.mainloop()

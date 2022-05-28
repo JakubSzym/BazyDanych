@@ -13,12 +13,4 @@ class User:
     self.phoneNumber = phoneNumber
     self.copies      = copies
   
-  def addMark():
-    return 0
-  
-  def rentBook():
-    return 0
-  
-  def returnBook():
-    return 0
 
