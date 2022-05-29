@@ -12,5 +12,4 @@ class User:
     self.address     = address
     self.phoneNumber = phoneNumber
     self.copies      = copies
-  
 
